@@ -1,0 +1,3 @@
+.\rk-flash.exe COM20 D:\GaoDen\dev\rk-smartwatch-stm32f411\application\build\rk-smartwatch-stm32f411-v1.0.0.bin 0
+
+.\rk-flash.exe COM20 D:\GaoDen\dev\rk-smartwatch-stm32f411\boot\build\rk-smartwatch-stm32f411-boot-v1.0.0.bin 1

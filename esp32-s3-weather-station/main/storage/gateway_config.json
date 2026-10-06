@@ -1,0 +1,36 @@
+{
+    "config": {
+        "network": {
+            "net_type": 0,
+            "wifi_ssid": "Nha tro 234",
+            "wifi_password": "0966726546@",
+            "wifi_auth": 3,
+            "ip_mode": 0,
+            "eth_ip_addr": "192.168.1.250",
+            "wifi_ip_addr": "192.168.1.251",
+            "gw_addr": "192.168.1.1",
+            "subnet_mask": "255.255.255.0",
+            "dns_addr": "8.8.8.8"
+        },
+        "uart": {
+            "baud_rate": 9600,
+            "data_bits": 8,
+            "stop_bits": 1,
+            "parity": 0,
+            "flow_control": 0
+        },
+        "mqtt": {
+            "host": "cloud.epcb.vn",
+            "port": 1883,
+            "ssl_enable": false,
+            "access_token": "GO0xKsobhWhyjEGqNx3o",
+            "polling_time": 30000
+        },
+        "provisioning": {
+            "provisioning_enable": false,
+            "provision_device_name": "GWE2604010001",
+            "provision_device_key": "<provision_device_key>",
+            "provision_device_secret": "<provision_device_secret>"
+        }
+    }
+}

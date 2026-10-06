@@ -1,0 +1,9 @@
+# ignore build output
+build/
+
+# ignore VSCode settings
+firmware_test/
+
+# ignore VSCode settings
+.vscode/
+.devcontainer/

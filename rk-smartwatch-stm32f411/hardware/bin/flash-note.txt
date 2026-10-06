@@ -1,0 +1,3 @@
+(*) Flash Partition:
+- Boot: 0x08000000
+- Application: 0x08004000

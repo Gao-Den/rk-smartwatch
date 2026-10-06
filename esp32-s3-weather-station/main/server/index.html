@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway Configuration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #1abc9c;
+            --background-color: #f8f9fa;
+            --card-color: #ffffff;
+            --text-color: #2c3e50;
+            --text-light: #7f8c8d;
+            --error-color: #e74c3c;
+            --success-color: #27ae60;
+            --border-color: #e1e8ed;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --radius: 6px;
+            --transition: all 0.2s ease;
+            --io-active: #2ecc71;
+            --io-inactive: #95a5a6;
+            --io-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 28px;
+        }
+
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+        }
+
+        .form-select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+        }
+
+        .tab-container {
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--accent-color);
+            background-color: #f8fafc;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            margin: 0 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .delete-btn {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+        }
+
+        .delete-btn:hover {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .status-message {
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+            display: block;
+        }
+
+        .status-error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+            border-left: 4px solid var(--error-color);
+            display: block;
+        }
+
+        #attributes_file_id {
+            display: none;
+        }
+
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .file-upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload-btn input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 20px 0;
+        }
+
+        .config-section {
+            margin-bottom: 25px;
+        }
+
+        .config-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-label span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        /* CA Certificate textarea */
+        .ca-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .ca-textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+        }
+
+        /* Progress Loading Styles */
+        .progress-loading {
+            display: none;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--card-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .progress-loading.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .progress-percentage {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .progress-status {
+            font-size: 13px;
+            color: var(--text-color);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Spinner for loading */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .spinner:after {
+            content: " ";
+            display: block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            border-color: var(--accent-color) transparent var(--accent-color) transparent;
+            animation: spinner 1.2s linear infinite;
+        }
+
+        @keyframes spinner {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Button disabled state */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Button with spinner */
+        .btn .spinner {
+            margin-right: 8px;
+            margin-bottom: 2px;
+        }
+
+        /* Control table specific styles */
+        .control-table th {
+            font-size: 12px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        .control-table td {
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        .control-table input[type="number"],
+        .control-table select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .control-table input[type="number"]:focus,
+        .control-table select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+        }
+
+        .rule-select {
+            min-width: 60px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab {
+                padding: 12px 8px;
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ESP32-S3 Gateway Configuration</h1>
+            <div class="btn-group">
+                <button id="reload_button_id" class="btn btn-secondary">Reload</button>
+                <button id="save_config_button_id" class="btn btn-success">Save Configuration</button>
+                <button id="reboot_config_button_id" class="btn btn-danger">Reboot</button>
+            </div>
+        </header>
+
+        <div id="status_message_id" class="status-message"></div>
+
+        <!-- Progress Loading Indicator -->
+        <div id="progress_loading_id" class="progress-loading">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <span class="spinner"></span>
+                    Saving Devices
+                </div>
+                <div class="progress-percentage" id="progress_percentage_id">0%</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress_bar_fill_id"></div>
+            </div>
+            
+            <div class="progress-details">
+                <span id="progress_current_id">0</span>
+                <span>of</span>
+                <span id="progress_total_id">0</span>
+                <span>items</span>
+            </div>
+            
+            <div class="progress-status" id="progress_status_id">Initializing...</div>
+        </div>
+
+        <!-- Progress Loading Indicator for Control Rules -->
+        <div id="control_progress_loading_id" class="progress-loading">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <span class="spinner"></span>
+                    Saving Control Rules
+                </div>
+                <div class="progress-percentage" id="control_progress_percentage_id">0%</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="control_progress_bar_fill_id"></div>
+            </div>
+            
+            <div class="progress-details">
+                <span id="control_progress_current_id">0</span>
+                <span>of</span>
+                <span id="control_progress_total_id">0</span>
+                <span>items</span>
+            </div>
+            
+            <div class="progress-status" id="control_progress_status_id">Initializing...</div>
+        </div>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="network">Network</div>
+                <div class="tab" data-tab="uart">UART</div>
+                <div class="tab" data-tab="mqtt">MQTT</div>
+                <div class="tab" data-tab="devices">Devices</div>
+                <div class="tab" data-tab="attributes">Device Attributes</div>
+                <div class="tab" data-tab="control">Control</div>
+                <div class="tab" data-tab="provisioning">Provisioning</div>
+            </div>
+
+            <!-- Network Tab -->
+            <div id="network" class="tab-content active">
+                <div class="card">
+                    <h2 class="card-title">Network Configuration</h2>
+                    <form id="network_form_id">
+                        <div class="config-section">
+                            <div class="config-section-title">WiFi Settings</div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label class="form-label">WiFi SSID</label>
+                                        <input type="text" id="wifi_ssid_id" class="form-control" placeholder="Enter WiFi SSID">
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label class="form-label">WiFi Password</label>
+                                        <input type="password" id="wifi_password_id" class="form-control" placeholder="Enter WiFi password">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">WiFi Authentication Type</label>
+                                <select id="wifi_auth_mode_id" class="form-select">
+                                    <option value="0">Open</option>
+                                    <option value="1">WEP</option>
+                                    <option value="2">WPA-PSK</option>
+                                    <option value="3">WPA2-PSK</option>
+                                    <option value="4">WPA-WPA2-PSK</option>
+                                    <option value="5">ENTERPRISE</option>
+                                    <option value="6">WPA3-PSK</option>
+                                    <option value="7">WPA2-WPA3-PSK</option>
+                                    <option value="8">WAPI-PSK</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="section-divider"></div>
+                        
+                        <div class="config-section">
+                            <div class="config-section-title">IP Configuration</div>
+                            <div class="form-group">
+                                <label class="form-label">IP Mode</label>
+                                <select id="ip_mode_id" class="form-select">
+                                    <option value="0">DHCP</option>
+                                    <option value="1">Static IP</option>
+                                </select>
+                            </div>
+                            
+                            <div id="static_ip_fields_id" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <div class="form-group">
+                                            <label class="form-label">IP Address (Ethernet)</label>
+                                            <input type="text" id="eth_ip_addr_id" class="form-control" placeholder="192.168.1.100">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">IP Address (Wi-Fi)</label>
+                                            <input type="text" id="wifi_ip_addr_id" class="form-control" placeholder="192.168.1.101">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">DNS Address</label>
+                                            <input type="text" id="dns_ip_addr_id" class="form-control" placeholder="8.8.8.8">
+                                        </div>
+                                    </div>
+                                    <div class="form-col">
+                                        <div class="form-group">
+                                            <label class="form-label">Subnet Mask</label>
+                                            <input type="text" id="subnet_mask_ip_addr_id" class="form-control" placeholder="255.255.255.0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Gateway Address</label>
+                                            <input type="text" id="gw_ip_addr_id" class="form-control" placeholder="192.168.1.1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- UART Tab -->
+            <div id="uart" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">UART Configuration</h2>
+                    <form id="uart_form_id">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Baud Rate</label>
+                                    <select id="baudrate_id" class="form-select">
+                                        <option value="9600">9600</option>
+                                        <option value="19200">19200</option>
+                                        <option value="38400">38400</option>
+                                        <option value="57600">57600</option>
+                                        <option value="115200">115200</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Data Bits</label>
+                                    <select id="data_bits_id" class="form-select">
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Stop Bits</label>
+                                    <select id="stop_bits_id" class="form-select">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Parity</label>
+                                    <select id="parity_id" class="form-select">
+                                        <option value="0">None</option>
+                                        <option value="1">Odd</option>
+                                        <option value="2">Even</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Flow Control</label>
+                            <select id="flow_control_id" class="form-select">
+                                <option value="0">None</option>
+                                <option value="1">Hardware</option>
+                                <option value="2">Software</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- MQTT Tab -->
+            <div id="mqtt" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">MQTT Configuration</h2>
+                    <form id="mqtt_form_id">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">MQTT Host</label>
+                                    <input type="text" id="mqtt_host_id" class="form-control" placeholder="mqtt.example.com">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">MQTT Port</label>
+                                    <input type="number" id="mqtt_port_id" class="form-control" placeholder="1883">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Access Token</label>
+                            <input type="text" id="mqtt_token_id" class="form-control" placeholder="Enter access token">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label class="form-label">Polling Time (ms)</label>
+                                    <input type="number" id="polling_time" class="form-control" placeholder="1000">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="config-section">
+                            <div class="config-section-title">SSL Configuration</div>
+                            
+                            <div class="toggle-label">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="mqtt_ssl_enable_id">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Enable MQTT SSL</span>
+                            </div>
+
+                            <div id="ssl_ca_fields_id" style="display: none;">
+                                <div class="form-group">
+                                    <label class="form-label">CA Certificate (PEM format)</label>
+                                    <textarea id="mqtt_ca_cert_id" class="ca-textarea" placeholder="-----BEGIN CERTIFICATE-----
+MII... Your CA certificate here ...
+-----END CERTIFICATE-----"></textarea>
+                                </div>
+                                
+                                <div class="btn-group">
+                                    <button type="button" id="load_ca_button_id" class="btn">Load CA</button>
+                                    <button type="button" id="save_ca_button_id" class="btn btn-success">Save CA</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Devices Tab -->
+            <div id="devices" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Connected Devices</h2>
+                    <div class="table-container">
+                        <table id="device_table_id">
+                            <thead>
+                                <tr>
+                                    <th>Slave ID</th>
+                                    <th>Device Type</th>
+                                    <th>Device Name</th>
+                                    <th>Label</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="device_table_body">
+                                <!-- Devices will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-actions">
+                        <button id="add_device_button_id" class="btn">Add Device</button>
+                        <button id="set_device_registry_button_id" class="btn btn-success">Save Devices</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device Attributes Tab -->
+            <div id="attributes" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Device Attributes</h2>
+                    <div class="btn-group">
+                        <label class="btn file-upload-btn">
+                            Import Attributes
+                            <input type="file" id="attributes_file_id" accept=".json">
+                        </label>
+                    </div>
+                    <div class="table-container">
+                        <table id="attributes_table_id">
+                            <thead>
+                                <tr>
+                                    <th>Device Type</th>
+                                    <th>Attribute Key</th>
+                                    <th>Register Address</th>
+                                    <th>Function Type</th>
+                                    <th>Data Type</th>
+                                    <th>Divide</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Attributes will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Tab -->
+            <div id="control" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Control Rules</h2>
+                    <p style="margin-bottom: 20px; color: var(--text-light); font-size: 14px;">
+                        Configure control rules based on device attributes. Host control reads values (0x03/0x04), target control writes values (0x05/0x06).
+                    </p>
+                    
+                    <div class="table-container">
+                        <table id="control_table_id">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" style="text-align: center;">Host Control (Read)</th>
+                                    <th rowspan="2" style="width: 80px;">Rule</th>
+                                    <th colspan="4" style="text-align: center;">Target Control (Write)</th>
+                                    <th rowspan="2" style="width: 100px;">Payload</th>
+                                    <th rowspan="2" style="width: 100px;">Enabled</th>
+                                    <th rowspan="2" style="width: 80px;">Actions</th>
+                                </tr>
+                                <tr>
+                                    <!-- Host Control Sub-headers -->
+                                    <th style="width: 80px;">Host ID</th>
+                                    <th style="width: 120px;">Device Type</th>
+                                    <th style="width: 140px;">Register</th>
+                                    <th style="width: 120px;">Function</th>
+                                    
+                                    <!-- Target Control Sub-headers -->
+                                    <th style="width: 80px;">Target ID</th>
+                                    <th style="width: 120px;">Device Type</th>
+                                    <th style="width: 140px;">Register</th>
+                                    <th style="width: 120px;">Function</th>
+                                </tr>
+                            </thead>
+                            <tbody id="control_table_body">
+                                <!-- Control rules will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button id="add_control_button_id" class="btn">Add Control Rule</button>
+                        <button id="set_control_rules_button_id" class="btn btn-success">Save Control Rules</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device Provisioning Tab -->
+            <div id="provisioning" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Provisioning</h2>
+                    <form id="provisioning_form_id">
+                        <div class="form-group">
+                            <div class="toggle-label">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="provisioning_enable_id">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span>Enable Device Provisioning</span>
+                            </div>
+                        </div>
+                        <div id="provisioning_fields_id" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Device Name</label>
+                                <input type="text" id="provisioning_device_name_id" class="form-control" placeholder="Enter device name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Device Key</label>
+                                <input type="text" id="provisioning_device_key_id" class="form-control" placeholder="Enter device key">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Device Secret</label>
+                                <input type="text" id="provisioning_device_secret_id" class="form-control" placeholder="Enter device secret">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            /* global variables to store configuration data */
+            let device_registry = { devices: [] };
+            let device_attributes = { device_attributes: [] };
+            let control_rules = { rules: [] };
+            let device_types = [];
+            let current_config = {};
+            
+            /* SSE variables */
+            let eventSource = null;
+            let reconnectTimeout = null;
+
+            /* initialize tab switching functionality */
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.tab).classList.add('active');
+
+                    if (this.dataset.tab === 'io-status') {
+                        connectSSE();
+                    } else {
+                        disconnectSSE();
+                    }
+                });
+            });
+
+            /* toggle static ip fields visibility based on ip mode selection */
+            document.getElementById('ip_mode_id').addEventListener('change', function() {
+                document.getElementById('static_ip_fields_id').style.display = this.value === '1' ? 'block' : 'none';
+            });
+
+            /* toggle SSL CA fields visibility */
+            document.getElementById('mqtt_ssl_enable_id').addEventListener('change', function() {
+                document.getElementById('ssl_ca_fields_id').style.display = this.checked ? 'block' : 'none';
+            });
+
+            /* toggle provisioning fields visibility */
+            document.getElementById('provisioning_enable_id').addEventListener('change', function() {
+                document.getElementById('provisioning_fields_id').style.display = this.checked ? 'block' : 'none';
+            });
+
+            /* button event listeners */
+            document.getElementById('reload_button_id').addEventListener('click', function() {
+                if (document.querySelector('.tab[data-tab="io-status"]').classList.contains('active')) {
+                    disconnectSSE();
+                    connectSSE();
+                    show_status_message('Refreshing I/O connection...', true);
+                }
+                else {
+                    gateway_update_configuration();
+                }
+            });
+
+            document.getElementById('save_config_button_id').addEventListener('click', set_gateway_config);
+            document.getElementById('reboot_config_button_id').addEventListener('click', gateway_reboot_req);
+            document.getElementById('add_device_button_id').addEventListener('click', add_new_device);
+            document.getElementById('set_device_registry_button_id').addEventListener('click', set_device_registry);
+            document.getElementById('attributes_file_id').addEventListener('change', device_attributes_import_file);
+            document.getElementById('load_ca_button_id').addEventListener('click', load_ca_certificate);
+            document.getElementById('save_ca_button_id').addEventListener('click', save_ca_certificate);
+            document.getElementById('add_control_button_id').addEventListener('click', add_new_control_rule);
+            document.getElementById('set_control_rules_button_id').addEventListener('click', set_control_rules);
+
+            /* function to display status messages */
+            function show_status_message(message, isSuccess) {
+                const statusEl = document.getElementById('status_message_id');
+                statusEl.textContent = message;
+                statusEl.className = `status-message ${isSuccess ? 'status-success' : 'status-error'}`;
+                setTimeout(() => statusEl.className = 'status-message', 5000);
+            }
+
+            /* SSE functions */
+            function connectSSE() {
+                if (eventSource) {
+                    eventSource.close();
+                }
+                
+                eventSource = new EventSource('/api/io_stream');
+                
+                eventSource.onopen = function() {
+                    console.log('SSE connection established');
+                };
+                
+                eventSource.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        console.log('Received SSE data:', data);
+                        updateIOStatus(data.di_mask, data.do_mask);
+                    } catch (e) {
+                        console.error('Error parsing SSE data:', e);
+                    }
+                };
+                
+                eventSource.onerror = function(error) {
+                    console.error('SSE connection error:', error);
+                    
+                    if (eventSource.readyState === EventSource.CLOSED) {
+                        clearTimeout(reconnectTimeout);
+                        reconnectTimeout = setTimeout(() => {
+                            if (document.querySelector('.tab[data-tab="io-status"]').classList.contains('active')) {
+                                connectSSE();
+                            }
+                        }, 3000);
+                    }
+                };
+            }
+            
+            function disconnectSSE() {
+                if (eventSource) {
+                    eventSource.close();
+                    eventSource = null;
+                }
+                clearTimeout(reconnectTimeout);
+            }
+            
+            function updateIOStatus(diMask, doMask) {
+                let activeDICount = 0;
+                for (let i = 0; i < 4; i++) {
+                    const bit = 1 << i;
+                    const isActive = (diMask & bit) !== 0;
+                    const indicator = document.getElementById(`di${i+1}_indicator`);
+                    if (indicator) {
+                        indicator.classList.toggle('active', isActive);
+                        if (isActive) activeDICount++;
+                    }
+                }
+                
+                let activeDOCount = 0;
+                for (let i = 0; i < 2; i++) {
+                    const bit = 1 << i;
+                    const isActive = (doMask & bit) !== 0;
+                    const indicator = document.getElementById(`do${i+1}_indicator`);
+                    if (indicator) {
+                        indicator.classList.toggle('active', isActive);
+                        if (isActive) activeDOCount++;
+                    }
+                }
+                
+                document.getElementById('active_di_count').textContent = activeDICount;
+                document.getElementById('active_do_count').textContent = activeDOCount;
+            }
+
+            /* Progress Helper Functions */
+            function showProgress(totalItems, type = 'devices') {
+                const progress = document.getElementById(type === 'control' ? 'control_progress_loading_id' : 'progress_loading_id');
+                progress.classList.add('active');
+                
+                if (type === 'control') {
+                    document.getElementById('control_progress_total_id').textContent = totalItems;
+                    const saveBtn = document.getElementById('set_control_rules_button_id');
+                    saveBtn.disabled = true;
+                    saveBtn.innerHTML = '<span class="spinner"></span>Saving...';
+                } else {
+                    document.getElementById('progress_total_id').textContent = totalItems;
+                    const saveBtn = document.getElementById('set_device_registry_button_id');
+                    saveBtn.disabled = true;
+                    saveBtn.innerHTML = '<span class="spinner"></span>Saving...';
+                }
+            }
+
+            function hideProgress(type = 'devices') {
+                const progress = document.getElementById(type === 'control' ? 'control_progress_loading_id' : 'progress_loading_id');
+                progress.classList.remove('active');
+
+                if (type === 'control') {
+                    const saveBtn = document.getElementById('set_control_rules_button_id');
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Save Control Rules';
+                } else {
+                    const saveBtn = document.getElementById('set_device_registry_button_id');
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Save Devices';
+                }
+            }
+
+            function updateProgress(current, total, status, type = 'devices') {
+                const percentage = total === 0 ? 100 : Math.round((current / total) * 100);
+                
+                if (type === 'control') {
+                    document.getElementById('control_progress_percentage_id').textContent = `${percentage}%`;
+                    document.getElementById('control_progress_bar_fill_id').style.width = `${percentage}%`;
+                    document.getElementById('control_progress_current_id').textContent = current;
+                    document.getElementById('control_progress_status_id').textContent = status;
+
+                    if (percentage === 100) {
+                        document.getElementById('control_progress_status_id').style.color = 'var(--success-color)';
+                    }
+                } else {
+                    document.getElementById('progress_percentage_id').textContent = `${percentage}%`;
+                    document.getElementById('progress_bar_fill_id').style.width = `${percentage}%`;
+                    document.getElementById('progress_current_id').textContent = current;
+                    document.getElementById('progress_status_id').textContent = status;
+
+                    if (percentage === 100) {
+                        document.getElementById('progress_status_id').style.color = 'var(--success-color)';
+                    }
+                }
+            }
+
+            /* Helper function to get read-only attributes (function type 0x03, 0x04) */
+            function getReadAttributes(deviceType) {
+                if (!device_attributes || !device_attributes.device_attributes) return [];
+                
+                const device = device_attributes.device_attributes.find(d => d.name === deviceType);
+                if (!device || !device.attributes) return [];
+                
+                return device.attributes.filter(attr => {
+                    const funcType = parseInt(attr.mb_func_type);
+                    return funcType === 0x03 || funcType === 0x04;
+                });
+            }
+
+            /* Helper function to get write-only attributes (function type 0x05, 0x06) */
+            function getWriteAttributes(deviceType) {
+                if (!device_attributes || !device_attributes.device_attributes) return [];
+                
+                const device = device_attributes.device_attributes.find(d => d.name === deviceType);
+                if (!device || !device.attributes) return [];
+                
+                return device.attributes.filter(attr => {
+                    const funcType = parseInt(attr.mb_func_type);
+                    return funcType === 0x05 || funcType === 0x06;
+                });
+            }
+
+            /* Helper function to update register dropdown based on device type and mode */
+            function updateRegisterDropdown(selectElement, deviceType, mode = 'read') {
+                const attributes = mode === 'read' ? getReadAttributes(deviceType) : getWriteAttributes(deviceType);
+                
+                selectElement.innerHTML = '<option value="">Select Register</option>';
+                attributes.forEach(attr => {
+                    const option = document.createElement('option');
+                    option.value = attr.reg_addr;
+                    option.textContent = `${attr.key} (0x${parseInt(attr.reg_addr).toString(16).toUpperCase()})`;
+                    option.dataset.funcType = attr.mb_func_type;
+                    selectElement.appendChild(option);
+                });
+            }
+
+            /* load all configuration data from server */
+            async function gateway_update_configuration() {
+                try {
+                    show_status_message('Loading configuration...', true);
+
+                    const [configRes, devicesRes, controlRes] = await Promise.all([
+                        fetch('/api/config'),
+                        fetch('/api/devices'),
+                        fetch('/api/control_rules')
+                    ]);
+
+                    if (!configRes.ok) throw new Error('Failed to load config');
+                    if (!devicesRes.ok) throw new Error('Failed to load devices');
+
+                    current_config = await configRes.json();
+                    device_registry = await devicesRes.json();
+                    
+                    if (controlRes.ok) {
+                        control_rules = await controlRes.json();
+                    } else {
+                        control_rules = { rules: [] };
+                    }
+
+                    device_attributes = { device_attributes: [] };
+                    device_types = [];
+
+                    update_config_ui();
+                    render_device_table();
+                    render_device_attributes_table();
+                    render_control_rules_table();
+
+                    show_status_message('Configuration is ready', true);
+                }
+                catch (error) {
+                    console.error('Loading error:', error);
+                    show_status_message('Failed to load configuration: ' + error.message, false);
+                }
+            }
+
+            /* save gateway configuration to server */
+            async function set_gateway_config() {
+                try {
+                    const config = {
+                        config_type: "gateway",
+                        config: {
+                            network: {
+                                wifi_ssid: document.getElementById('wifi_ssid_id').value,
+                                wifi_password: document.getElementById('wifi_password_id').value,
+                                wifi_auth: parseInt(document.getElementById('wifi_auth_mode_id').value),
+                                ip_mode: parseInt(document.getElementById('ip_mode_id').value),
+                                eth_ip_addr: document.getElementById('eth_ip_addr_id').value,
+                                wifi_ip_addr: document.getElementById('wifi_ip_addr_id').value,
+                                gw_addr: document.getElementById('gw_ip_addr_id').value,
+                                subnet_mask: document.getElementById('subnet_mask_ip_addr_id').value,
+                                dns_addr: document.getElementById('dns_ip_addr_id').value
+                            },
+                            uart: {
+                                baud_rate: parseInt(document.getElementById('baudrate_id').value),
+                                data_bits: parseInt(document.getElementById('data_bits_id').value),
+                                stop_bits: parseInt(document.getElementById('stop_bits_id').value),
+                                parity: parseInt(document.getElementById('parity_id').value),
+                                flow_control: parseInt(document.getElementById('flow_control_id').value)
+                            },
+                            mqtt: {
+                                host: document.getElementById('mqtt_host_id').value,
+                                port: parseInt(document.getElementById('mqtt_port_id').value),
+                                access_token: document.getElementById('mqtt_token_id').value,
+                                polling_time: parseInt(document.getElementById('polling_time').value),
+                                ssl_enable: document.getElementById('mqtt_ssl_enable_id').checked ? 1 : 0,
+                            },
+                            provisioning: {
+                                provisioning_enable: document.getElementById('provisioning_enable_id').checked ? 1 : 0,
+                                provision_device_name: document.getElementById('provisioning_device_name_id').value,
+                                provision_device_key: document.getElementById('provisioning_device_key_id').value,
+                                provision_device_secret: document.getElementById('provisioning_device_secret_id').value
+                            }
+                        }
+                    };
+                    
+                    const response = await fetch('/api/save_config', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(config)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Configuration setup failed');
+                    }
+                    
+                    show_status_message('Gateway configuration updated successfully', true);
+                }
+                catch (error) {
+                    show_status_message('Gateway configuration setup failed: ' + error.message, false);
+                }
+            }
+
+            /* update ui with loaded configuration */
+            function update_config_ui() {
+                if (!current_config.config) {
+                    return;
+                }
+
+                const network = current_config.config.network;
+                if (network) {
+                    document.getElementById('wifi_ssid_id').value = network.wifi_ssid || '';
+                    document.getElementById('wifi_password_id').value = network.wifi_password || '';
+                    document.getElementById('wifi_auth_mode_id').value = network.wifi_auth || '0';
+                    document.getElementById('ip_mode_id').value = network.ip_mode || '0';
+                    document.getElementById('eth_ip_addr_id').value = network.eth_ip_addr || '';
+                    document.getElementById('wifi_ip_addr_id').value = network.wifi_ip_addr || '';
+                    document.getElementById('gw_ip_addr_id').value = network.gw_addr || '';
+                    document.getElementById('subnet_mask_ip_addr_id').value = network.subnet_mask || '';
+                    document.getElementById('dns_ip_addr_id').value = network.dns_addr || '';
+                    
+                    document.getElementById('ip_mode_id').dispatchEvent(new Event('change'));
+                }
+                
+                const uart = current_config.config.uart;
+                if (uart) {
+                    document.getElementById('baudrate_id').value = uart.baud_rate || '9600';
+                    document.getElementById('data_bits_id').value = uart.data_bits || '8';
+                    document.getElementById('stop_bits_id').value = uart.stop_bits || '1';
+                    document.getElementById('parity_id').value = uart.parity || '0';
+                    document.getElementById('flow_control_id').value = uart.flow_control || '0';
+                }
+                
+                const mqtt = current_config.config.mqtt;
+                if (mqtt) {
+                    document.getElementById('mqtt_host_id').value = mqtt.host || '';
+                    document.getElementById('mqtt_port_id').value = mqtt.port || '';
+                    document.getElementById('mqtt_token_id').value = mqtt.access_token || '';
+                    document.getElementById('polling_time').value = mqtt.polling_time || '';
+                    
+                    if (mqtt.ssl_enable !== undefined) {
+                        const ssl_enable_ret = mqtt.ssl_enable === true || mqtt.ssl_enable === 1;
+                        document.getElementById('mqtt_ssl_enable_id').checked = ssl_enable_ret;
+                        document.getElementById('ssl_ca_fields_id').style.display = ssl_enable_ret ? 'block' : 'none';
+                    }
+                    
+                    document.getElementById('mqtt_ca_cert_id').value = '';
+                }
+
+                const provisioning = current_config.config.provisioning;
+                if (provisioning) {
+                    const provisioning_enable_ret = provisioning.provisioning_enable === true || provisioning.provisioning_enable === 1;
+                    document.getElementById('provisioning_enable_id').checked = provisioning_enable_ret;
+                    document.getElementById('provisioning_fields_id').style.display = provisioning_enable_ret ? 'block' : 'none';
+
+                    document.getElementById('provisioning_device_name_id').value = provisioning.provision_device_name || '';
+                    document.getElementById('provisioning_device_key_id').value = provisioning.provision_device_key || '';
+                    document.getElementById('provisioning_device_secret_id').value = provisioning.provision_device_secret || '';
+                }
+            }
+
+            /* get device registry from server */
+            async function get_device_registry() {
+                try {
+                    const response = await fetch('/api/devices');
+                    if (!response.ok) {
+                        throw new Error('Failed to load devices');
+                    }
+                    
+                    device_registry = await response.json();
+                    render_device_table();
+                }
+                catch (error) {
+                    throw error;
+                }
+            }
+
+            /* get control rules from server */
+            async function get_control_rules() {
+                try {
+                    const response = await fetch('/api/control_rules');
+                    if (!response.ok) {
+                        throw new Error('Failed to load control rules');
+                    }
+                    
+                    control_rules = await response.json();
+                    render_control_rules_table();
+                }
+                catch (error) {
+                    throw error;
+                }
+            }
+
+            function render_device_table() {
+                const tbody = document.getElementById('device_table_body');
+                tbody.innerHTML = '';
+
+                if (!device_registry.devices || !device_registry.devices.length) {
+                    return;
+                }
+
+                device_registry.devices.forEach(device => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><input type="number" value="${device.slave_id}" class="form-control"></td>
+                        <td>
+                            <select class="form-select">
+                                ${device_types.length > 0
+                                    ? device_types.map(type => 
+                                        `<option value="${type}" ${device.type === type ? "selected" : ""}>${type}</option>`
+                                    ).join('')
+                                    : `<option value="${device.type}">${device.type}</option>`}
+                            </select>
+                        </td>
+                        <td><input type="text" value="${device.name || ''}" class="form-control"></td>
+                        <td><input type="text" value="${device.label || ''}" class="form-control"></td>
+                        <td>
+                            <button class="action-btn delete-btn" data-action="delete">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                document.querySelectorAll('[data-action="delete"]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.closest('tr').remove();
+                    });
+                });
+            }
+
+            function render_control_rules_table() {
+                const tbody = document.getElementById('control_table_body');
+                tbody.innerHTML = '';
+
+                if (!control_rules.rules || !control_rules.rules.length) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="13" style="text-align: center; padding: 40px; color: var(--text-light);">No control rules configured</td>`;
+                    tbody.appendChild(row);
+                    return;
+                }
+
+                control_rules.rules.forEach(rule => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <input type="number" class="form-control" value="${rule.host_slave_address}" placeholder="Host ID" min="1" max="247">
+                        </td>
+                        <td>
+                            <select class="form-select host-device-type">
+                                ${device_types.map(type => 
+                                    `<option value="${type}" ${rule.host_device_profile === type ? 'selected' : ''}>${type}</option>`
+                                ).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select host-register">
+                                <option value="">Select Register</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select host-function">
+                                <option value="3" ${rule.host_mb_func_type === 3 ? 'selected' : ''}>0x03 Read Holding</option>
+                                <option value="4" ${rule.host_mb_func_type === 4 ? 'selected' : ''}>0x04 Read Input</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select rule-select">
+                                <option value="1" ${rule.rule === 1 ? 'selected' : ''}>&lt;</option>
+                                <option value="2" ${rule.rule === 2 ? 'selected' : ''}>&gt;=</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" value="${rule.target_slave_address}" placeholder="Target ID" min="1" max="247">
+                        </td>
+                        <td>
+                            <select class="form-select target-device-type">
+                                ${device_types.map(type => 
+                                    `<option value="${type}" ${rule.target_device_profile === type ? 'selected' : ''}>${type}</option>`
+                                ).join('')}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select target-register">
+                                <option value="">Select Register</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select target-function">
+                                <option value="5" ${rule.target_mb_func_type === 5 ? 'selected' : ''}>0x05 Write Single Coil</option>
+                                <option value="6" ${rule.target_mb_func_type === 6 ? 'selected' : ''}>0x06 Write Single Register</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" value="${rule.payload_control}" placeholder="Payload" min="0" max="65535">
+                        </td>
+                        <td>
+                            <select class="form-select">
+                                <option value="1" ${rule.enabled === 1 ? 'selected' : ''}>Enabled</option>
+                                <option value="0" ${rule.enabled === 0 ? 'selected' : ''}>Disabled</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="action-btn delete-btn" data-action="delete-control">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+
+                    const hostDeviceSelect = row.querySelector('.host-device-type');
+                    const hostRegisterSelect = row.querySelector('.host-register');
+                    const hostFunctionSelect = row.querySelector('.host-function');
+                    const targetDeviceSelect = row.querySelector('.target-device-type');
+                    const targetRegisterSelect = row.querySelector('.target-register');
+                    const targetFunctionSelect = row.querySelector('.target-function');
+
+                    // Initialize register dropdowns
+                    if (hostDeviceSelect.value) {
+                        updateRegisterDropdown(hostRegisterSelect, hostDeviceSelect.value, 'read');
+                        hostRegisterSelect.value = rule.host_reg_addr || '';
+                    }
+
+                    if (targetDeviceSelect.value) {
+                        updateRegisterDropdown(targetRegisterSelect, targetDeviceSelect.value, 'write');
+                        targetRegisterSelect.value = rule.target_reg_addr || '';
+                    }
+
+                    // Add event listeners for device type changes
+                    hostDeviceSelect.addEventListener('change', function() {
+                        updateRegisterDropdown(hostRegisterSelect, this.value, 'read');
+                        hostRegisterSelect.value = '';
+                        hostFunctionSelect.value = '';
+                    });
+
+                    targetDeviceSelect.addEventListener('change', function() {
+                        updateRegisterDropdown(targetRegisterSelect, this.value, 'write');
+                        targetRegisterSelect.value = '';
+                        targetFunctionSelect.value = '';
+                    });
+
+                    // Add event listener for register selection to auto-set function type
+                    hostRegisterSelect.addEventListener('change', function() {
+                        const selectedOption = this.options[this.selectedIndex];
+                        if (selectedOption && selectedOption.dataset.funcType) {
+                            hostFunctionSelect.value = selectedOption.dataset.funcType;
+                        }
+                    });
+
+                    targetRegisterSelect.addEventListener('change', function() {
+                        const selectedOption = this.options[this.selectedIndex];
+                        if (selectedOption && selectedOption.dataset.funcType) {
+                            targetFunctionSelect.value = selectedOption.dataset.funcType;
+                        }
+                    });
+                });
+
+                document.querySelectorAll('[data-action="delete-control"]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.closest('tr').remove();
+                    });
+                });
+            }
+
+            function add_new_device() {
+                const tbody = document.getElementById('device_table_body');
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="number" class="form-control" placeholder="Slave ID"></td>
+                    <td>
+                        <select class="form-select">
+                            ${device_types.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><input type="text" class="form-control" placeholder="Device Name"></td>
+                    <td><input type="text" class="form-control" placeholder="Label"></td>
+                    <td>
+                        <button class="action-btn delete-btn" data-action="delete">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                row.querySelector('[data-action="delete"]').addEventListener('click', function() {
+                    this.closest('tr').remove();
+                });
+            }
+
+            function add_new_control_rule() {
+                const tbody = document.getElementById('control_table_body');
+                
+                // Remove "no rules" message if present
+                if (tbody.children.length === 1 && tbody.children[0].querySelector('td[colspan="13"]')) {
+                    tbody.innerHTML = '';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <input type="number" class="form-control" placeholder="Host ID" min="1" max="247">
+                    </td>
+                    <td>
+                        <select class="form-select host-device-type">
+                            ${device_types.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select host-register">
+                            <option value="">Select Register</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select host-function">
+                            <option value="3">0x03 Read Holding</option>
+                            <option value="4">0x04 Read Input</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select rule-select">
+                            <option value="1">&lt;</option>
+                            <option value="2">&gt;=</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" placeholder="Target ID" min="1" max="247">
+                    </td>
+                    <td>
+                        <select class="form-select target-device-type">
+                            ${device_types.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select target-register">
+                            <option value="">Select Register</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select target-function">
+                            <option value="5">0x05 Write Single Coil</option>
+                            <option value="6">0x06 Write Single Register</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" placeholder="Payload" min="0" max="65535">
+                    </td>
+                    <td>
+                        <select class="form-select">
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="action-btn delete-btn" data-action="delete-control">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                const hostDeviceSelect = row.querySelector('.host-device-type');
+                const hostRegisterSelect = row.querySelector('.host-register');
+                const hostFunctionSelect = row.querySelector('.host-function');
+                const targetDeviceSelect = row.querySelector('.target-device-type');
+                const targetRegisterSelect = row.querySelector('.target-register');
+                const targetFunctionSelect = row.querySelector('.target-function');
+
+                // Initialize register dropdowns
+                if (hostDeviceSelect.value) {
+                    updateRegisterDropdown(hostRegisterSelect, hostDeviceSelect.value, 'read');
+                }
+
+                if (targetDeviceSelect.value) {
+                    updateRegisterDropdown(targetRegisterSelect, targetDeviceSelect.value, 'write');
+                }
+
+                // Add event listeners
+                hostDeviceSelect.addEventListener('change', function() {
+                    updateRegisterDropdown(hostRegisterSelect, this.value, 'read');
+                });
+
+                targetDeviceSelect.addEventListener('change', function() {
+                    updateRegisterDropdown(targetRegisterSelect, this.value, 'write');
+                });
+
+                // Add event listener for register selection to auto-set function type
+                hostRegisterSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    if (selectedOption && selectedOption.dataset.funcType) {
+                        hostFunctionSelect.value = selectedOption.dataset.funcType;
+                    }
+                });
+
+                targetRegisterSelect.addEventListener('change', function() {
+                    const selectedOption = this.options[this.selectedIndex];
+                    if (selectedOption && selectedOption.dataset.funcType) {
+                        targetFunctionSelect.value = selectedOption.dataset.funcType;
+                    }
+                });
+
+                row.querySelector('[data-action="delete-control"]').addEventListener('click', function() {
+                    this.closest('tr').remove();
+                });
+            }
+
+            async function set_device_registry() {
+                try {
+                    const rows = document.querySelectorAll('#device_table_body tr');
+                    const object_list = [];
+
+                    if (rows.length === 0) {
+                        const payload = { total: 0, index: 0, item: null };
+                        
+                        const rsp = await fetch('/api/save_devices_step', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!rsp.ok) throw new Error("MCU rejected empty device list");
+                        
+                        show_status_message("Device registry cleared successfully", true);
+                        await get_device_registry();
+
+                        return;
+                    }
+
+                    if (!device_attributes || !device_attributes.device_attributes || device_attributes.device_attributes.length === 0) {
+                        show_status_message("Please import attributes.json before saving devices!", false);
+                        return;
+                    }
+
+                    if (device_types.length === 0) {
+                        show_status_message("No device types available. Please import attributes.json first!", false);
+                        return;
+                    }
+
+                    rows.forEach(row => {
+                        const slaveInput = row.querySelector('td:nth-child(1) input');
+                        const typeSelect = row.querySelector('td:nth-child(2) select');
+
+                        if (!slaveInput || !typeSelect) return;
+
+                        const slaveId = slaveInput.value;
+                        const type = typeSelect.value;
+                        const name = row.querySelector('td:nth-child(3) input')?.value || "";
+                        const label = row.querySelector('td:nth-child(4) input')?.value || "";
+
+                        if (!slaveId) return;
+
+                        const profile = device_attributes.device_attributes
+                            ?.find(x => x.name === type);
+
+                        if (!profile) {
+                            throw new Error(
+                                `Device type "${type}" has no defined attributes! ` +
+                                `Please fix attributes.json`
+                            );
+                        }
+
+                        profile.attributes.forEach(attr => {
+                            object_list.push({
+                                object_device: name,
+                                object_profile: type,
+                                object_key: attr.key,
+                                slave_address: parseInt(slaveId),
+                                mb_func_type: attr.mb_func_type,
+                                reg_addr: attr.reg_addr,
+                                reg_data_type: attr.reg_data_type,
+                                divide: attr.divide,
+                                label: label
+                            });
+                        });
+                    });
+
+                    console.log("Total items to save:", object_list.length);
+
+                    showProgress(object_list.length);
+                    updateProgress(0, object_list.length, "Starting to save devices...");
+
+                    let total = object_list.length;
+                    let successCount = 0;
+
+                    for (let i = 0; i < total; i++) {
+
+                        updateProgress(i + 1, total, `Saving item ${i + 1} of ${total}`);
+
+                        const payload = { total, index: i, item: object_list[i] };
+
+                        try {
+                            const rsp = await fetch('/api/save_devices_step', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (!rsp.ok) {
+                                throw new Error(`Server error at item ${i + 1}`);
+                            }
+
+                            const js = await rsp.json();
+
+                            if (js.done === true) {
+                                successCount++;
+                            }
+
+                            await new Promise(resolve => setTimeout(resolve, 50));
+                            
+                        }
+                        catch (error) {
+                            hideProgress();
+                            throw new Error(`Failed at item ${i + 1}: ${error.message}`);
+                        }
+                    }
+
+                    updateProgress(total, total, "Finalizing...");
+                    
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    hideProgress();
+                    show_status_message(`Device registry updated successfully`, true);
+
+                    await get_device_registry();
+
+                }
+                catch (e) {
+                    console.error(e);
+                    hideProgress();
+                    show_status_message("Failed: " + e.message, false);
+                }
+            }
+
+            async function set_control_rules() {
+                try {
+                    const rows = document.querySelectorAll('#control_table_body tr');
+                    const rules_list = [];
+
+                    // Check for "no rules" message
+                    if (rows.length === 1 && rows[0].querySelector('td[colspan="13"]')) {
+                        const payload = { total: 0, index: 0, item: null };
+                        
+                        const rsp = await fetch('/api/save_control_rules_step', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!rsp.ok) throw new Error("MCU rejected empty control rules list");
+                        
+                        show_status_message("Control rules cleared successfully", true);
+                        await get_control_rules();
+
+                        return;
+                    }
+
+                    if (!device_attributes || !device_attributes.device_attributes || device_attributes.device_attributes.length === 0) {
+                        show_status_message("Please import attributes.json before saving control rules!", false);
+                        return;
+                    }
+
+                    if (device_types.length === 0) {
+                        show_status_message("No device types available. Please import attributes.json first!", false);
+                        return;
+                    }
+
+                    let errorMessage = '';
+                    rows.forEach((row, index) => {
+                        // Skip the "no rules" row
+                        if (row.querySelector('td[colspan="13"]')) return;
+
+                        const inputs = {
+                            host_slave_address: row.querySelector('td:nth-child(1) input')?.value,
+                            host_device_profile: row.querySelector('.host-device-type')?.value,
+                            host_reg_addr: row.querySelector('.host-register')?.value,
+                            host_mb_func_type: row.querySelector('.host-function')?.value,
+                            rule: row.querySelector('.rule-select')?.value,
+                            target_slave_address: row.querySelector('td:nth-child(6) input')?.value,
+                            target_device_profile: row.querySelector('.target-device-type')?.value,
+                            target_reg_addr: row.querySelector('.target-register')?.value,
+                            target_mb_func_type: row.querySelector('.target-function')?.value,
+                            payload_control: row.querySelector('td:nth-child(10) input')?.value,
+                            enabled: row.querySelector('td:nth-child(11) select')?.value
+                        };
+
+                        // Validate required fields
+                        if (!inputs.host_slave_address || !inputs.host_device_profile || !inputs.host_reg_addr || !inputs.host_mb_func_type) {
+                            errorMessage = `Row ${index + 1}: Host control configuration is incomplete`;
+                            return;
+                        }
+
+                        if (!inputs.target_slave_address || !inputs.target_device_profile || !inputs.target_reg_addr || !inputs.target_mb_func_type) {
+                            errorMessage = `Row ${index + 1}: Target control configuration is incomplete`;
+                            return;
+                        }
+
+                        if (!inputs.payload_control || !inputs.rule || !inputs.enabled) {
+                            errorMessage = `Row ${index + 1}: Rule configuration is incomplete`;
+                            return;
+                        }
+
+                        // Validate host function type (must be 3 or 4 for read)
+                        const hostFunc = parseInt(inputs.host_mb_func_type);
+                        if (hostFunc !== 3 && hostFunc !== 4) {
+                            errorMessage = `Row ${index + 1}: Host function type must be 0x03 or 0x04`;
+                            return;
+                        }
+
+                        // Validate target function type (must be 5 or 6 for write)
+                        const targetFunc = parseInt(inputs.target_mb_func_type);
+                        if (targetFunc !== 5 && targetFunc !== 6) {
+                            errorMessage = `Row ${index + 1}: Target function type must be 0x05 or 0x06`;
+                            return;
+                        }
+
+                        rules_list.push({
+                            host_device_profile: inputs.host_device_profile,
+                            host_slave_address: parseInt(inputs.host_slave_address),
+                            host_mb_func_type: hostFunc,
+                            host_reg_addr: parseInt(inputs.host_reg_addr),
+                            rule: parseInt(inputs.rule),
+                            target_device_profile: inputs.target_device_profile,
+                            target_slave_address: parseInt(inputs.target_slave_address),
+                            target_mb_func_type: targetFunc,
+                            target_reg_addr: parseInt(inputs.target_reg_addr),
+                            payload_control: parseInt(inputs.payload_control),
+                            enabled: parseInt(inputs.enabled)
+                        });
+                    });
+
+                    if (errorMessage) {
+                        show_status_message(errorMessage, false);
+                        return;
+                    }
+
+                    console.log("Total control rules to save:", rules_list.length);
+
+                    showProgress(rules_list.length, 'control');
+                    updateProgress(0, rules_list.length, "Starting to save control rules...", 'control');
+
+                    let total = rules_list.length;
+                    let successCount = 0;
+
+                    for (let i = 0; i < total; i++) {
+                        updateProgress(i + 1, total, `Saving rule ${i + 1} of ${total}`, 'control');
+
+                        const payload = { total, index: i, item: rules_list[i] };
+
+                        try {
+                            const rsp = await fetch('/api/save_control_rules_step', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (!rsp.ok) {
+                                throw new Error(`Server error at rule ${i + 1}`);
+                            }
+
+                            const js = await rsp.json();
+
+                            if (js.done === true) {
+                                successCount++;
+                            }
+
+                            await new Promise(resolve => setTimeout(resolve, 50));
+                            
+                        }
+                        catch (error) {
+                            hideProgress('control');
+                            throw new Error(`Failed at rule ${i + 1}: ${error.message}`);
+                        }
+                    }
+
+                    updateProgress(total, total, "Finalizing...", 'control');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    hideProgress('control');
+                    show_status_message(`Control rules updated successfully`, true);
+
+                    await get_control_rules();
+
+                }
+                catch (e) {
+                    console.error(e);
+                    hideProgress('control');
+                    show_status_message("Failed: " + e.message, false);
+                }
+            }
+
+            function render_device_attributes_table() {
+                const tbody = document.querySelector('#attributes_table_id tbody');
+                tbody.innerHTML = '';
+
+                if (!device_attributes || 
+                    !device_attributes.device_attributes || 
+                    !Array.isArray(device_attributes.device_attributes) || 
+                    device_attributes.device_attributes.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6">No attributes found</td></tr>';
+                    return;
+                }
+
+                device_attributes.device_attributes.forEach(device => {
+                    if (!device.attributes || !Array.isArray(device.attributes) || device.attributes.length === 0) {
+                        return;
+                    }
+
+                    const firstRow = document.createElement('tr');
+                    firstRow.innerHTML = `
+                        <td rowspan="${device.attributes.length}">${device.name ?? ''}</td>
+                        <td>${device.attributes[0].key ?? ''}</td>
+                        <td>${device.attributes[0].reg_addr ?? ''}</td>
+                        <td>${device.attributes[0].mb_func_type ?? ''}</td>
+                        <td>${device.attributes[0].reg_data_type ?? ''}</td>
+                        <td>${device.attributes[0].divide ?? ''}</td>
+                    `;
+                    tbody.appendChild(firstRow);
+                    
+                    for (let i = 1; i < device.attributes.length; i++) {
+                        const attr = device.attributes[i];
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${attr.key ?? ''}</td>
+                            <td>${attr.reg_addr ?? ''}</td>
+                            <td>${attr.mb_func_type ?? ''}</td>
+                            <td>${attr.reg_data_type ?? ''}</td>
+                            <td>${attr.divide ?? ''}</td>
+                        `;
+                        tbody.appendChild(row);
+                    }
+                });
+            }
+
+            function device_attributes_import_file(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    try {
+                        const jsonData = JSON.parse(e.target.result);
+
+                        if (!jsonData || typeof jsonData !== 'object') {
+                            throw new Error('Invalid JSON format');
+                        }
+                        if (!Array.isArray(jsonData.device_attributes)) {
+                            throw new Error('Missing device_attributes array');
+                        }
+
+                        device_attributes = jsonData;
+                        device_types = Array.isArray(device_attributes.device_attributes)
+                            ? device_attributes.device_attributes.map(x => x.name || "")
+                            : [];
+
+                        render_device_attributes_table();
+                        render_device_table();
+                        render_control_rules_table();
+
+                        show_status_message('Attributes imported successfully', true);
+                    }
+                    catch (error) {
+                        device_attributes = { device_attributes: [] };
+                        device_types = [];
+                        show_status_message('Import failed: ' + error.message, false);
+                    }
+                };
+
+                reader.onerror = function() {
+                    show_status_message('Cannot read file', false);
+                };
+
+                reader.readAsText(file);
+            }
+
+            async function load_ca_certificate() {
+                try {
+                    const response = await fetch('/api/get_ca');
+                    if (!response.ok) {
+                        throw new Error('Failed to load CA certificate');
+                    }
+                    
+                    const caData = await response.json();
+                    document.getElementById('mqtt_ca_cert_id').value = caData.ca_cert || '';
+                    show_status_message('CA certificate loaded successfully', true);
+                }
+                catch (error) {
+                    show_status_message('Failed to load CA certificate: ' + error.message, false);
+                }
+            }
+
+            async function save_ca_certificate() {
+                try {
+                    const caCert = document.getElementById('mqtt_ca_cert_id').value.trim();
+                    
+                    if (!caCert) {
+                        show_status_message('CA certificate cannot be empty', false);
+                        return;
+                    }
+
+                    const payload = {
+                        ca_cert: caCert
+                    };
+
+                    const response = await fetch('/api/save_ca', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to save CA certificate');
+                    }
+                    
+                    show_status_message('CA certificate saved successfully', true);
+                }
+                catch (error) {
+                    show_status_message('Failed to save CA certificate: ' + error.message, false);
+                }
+            }
+
+            async function gateway_reboot_req() {
+                if (confirm('Are you sure you want to reboot the Gateway?')) {
+                    try {
+                        const response = await fetch('/api/reboot', { method: 'POST' });
+                        if (!response.ok) throw new Error('Reboot failed');
+                        show_status_message('Gateway is rebooting...', true);
+                    }
+                    catch (error) {
+                        show_status_message('Failed to reboot: ' + error.message, false);
+                    }
+                }
+            }
+
+            /* initialize the application */
+            gateway_update_configuration();
+            
+            /* Clean up on page unload */
+            window.addEventListener('beforeunload', function() {
+                disconnectSSE();
+            });
+        });
+    </script>
+</body>
+</html>
