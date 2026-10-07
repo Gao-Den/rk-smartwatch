@@ -48,7 +48,7 @@ The build consists of:
 
 The board is designed in accordance with DFM (Design for Manufacturing) standards.
 
-Manufacturing resources: [Download](https://github.com/Gao-Den/rk-smartwatch/rk-smartwatch-stm32f411/hardware/manufacturing)
+Manufacturing resources: [Download](https://github.com/Gao-Den/rk-smartwatch/tree/main/rk-smartwatch-stm32f411/hardware/manufacturing)
 
 #### Mechanical
 <div style="text-align: left;">
@@ -58,7 +58,7 @@ Manufacturing resources: [Download](https://github.com/Gao-Den/rk-smartwatch/rk-
 
 The project resources include the attached 3D-printable files.
 
-3D Print: [Download](https://github.com/Gao-Den/rk-smartwatch/rk-smartwatch-stm32f411/hardware/mechanical/3d-print)
+3D Print: [Download](https://github.com/Gao-Den/rk-smartwatch/tree/main/rk-smartwatch-stm32f411/hardware/mechanical/3d-part)
 
 #### UX/UI Design
 <div style="text-align: left;">
@@ -66,7 +66,7 @@ The project resources include the attached 3D-printable files.
 </div>
 <br>
 
-The interface and screen transitions are designed in Figma. Design reference: [Download](https://github.com/Gao-Den/rk-smartwatch/rk-smartwatch-stm32f411/application/sources/app/screen/references)
+The interface and screen transitions are designed in Figma. Design reference: [Download](https://github.com/Gao-Den/rk-smartwatch/tree/main/rk-smartwatch-stm32f411/application/sources/app/screen/references)
 
 ### 3. Firmware:
 
