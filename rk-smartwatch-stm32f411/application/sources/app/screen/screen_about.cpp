@@ -39,7 +39,7 @@ void screen_about_create() {
     lv_qrcode_set_size(rk_opensource_qr, 65);
     lv_qrcode_set_dark_color(rk_opensource_qr, lv_color_hex(0xffffff));
     lv_qrcode_set_light_color(rk_opensource_qr, lv_color_hex(0x000000));
-    lv_qrcode_set_data(rk_opensource_qr, "https://github.com/Gao-Den/rkos");
+    lv_qrcode_set_data(rk_opensource_qr, "https://github.com/Gao-Den/rk-smartwatch");
     lv_qrcode_set_quiet_zone(rk_opensource_qr, true);
     lv_obj_set_style_border_color(rk_opensource_qr, lv_color_hex(0x000000), 0);
     lv_obj_set_style_border_width(rk_opensource_qr, 0, 0);
