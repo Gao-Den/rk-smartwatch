@@ -38,7 +38,7 @@ The build consists of:
 - Case (3D-printed)
 - PCBA board
 - Battery & Wireless charging
-- Apple Watch strap.
+- Apple Watch strap
 
 #### PCB Assembly
 <div style="text-align: left;">
